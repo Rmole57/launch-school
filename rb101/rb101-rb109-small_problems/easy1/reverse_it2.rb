@@ -8,27 +8,22 @@ puts reverse_words('Professional')
 puts reverse_words('Walk around the block')
 puts reverse_words('Launch School')
 
+# ALTERNATIVE SOLUTIONS:
 
-=begin
+# 1)
+# def reverse_words(string)
+#   words = []
 
-ALTERNATIVE SOLUTIONS:
+#   string.split.each do |word|
+#     word.reverse! if word.size >= 5
+#     words << word
+#   end
 
-1)
-def reverse_words(string)
-  words = []
+#   words.join(' ')
+# end
 
-  string.split.each do |word|
-    word.reverse! if word.size >= 5
-    words << word
-  end
-
-  words.join(' ')
-end
-
-2)
-def reverse_words(string)
-  words = string.split
-  words.each { |word| word.reverse! if word.size >= 5 }.join(' ')
-end
-
-=end
+# 2)
+# def reverse_words(string)
+#   words = string.split
+#   words.each { |word| word.reverse! if word.size >= 5 }.join(' ')
+# end

@@ -7,40 +7,35 @@ puts digit_list(7) == [7]
 puts digit_list(375290) == [3, 7, 5, 2, 9, 0]
 puts digit_list(444) == [4, 4, 4]
 
+# ALTERNATIVE SOLUTIONS:
 
-=begin
+# (If you can't use Integer#digits method):
 
-ALTERNATIVE SOLUTIONS:
+# def digit_list(num)
+#   digits = []
 
-(If you can't use Integer#digits method):
+#   until num == 0
+#     digits << num % 10
+#     num /= 10
+#   end
 
-def digit_list(num)
-  digits = []
-  
-  until num == 0
-    digits << num % 10
-    num /= 10
-  end
+#   digits.reverse
+# end
 
-  digits.reverse
-end
+# (Brute Force):
 
-(Brute Force):
+# def digit_list(number)
+#   digits = []
+#   loop do
+#     number, remainder = number.divmod(10)
+#     digits.unshift(remainder)
+#     break if number == 0
+#   end
+#   digits
+# end
 
-def digit_list(number)
-  digits = []
-  loop do
-    number, remainder = number.divmod(10)
-    digits.unshift(remainder)
-    break if number == 0
-  end
-  digits
-end
+# (Idiomatic Ruby):
 
-(Idiomatic Ruby):
-
-def digit_list(number)
-  number.to_s.chars.map(&:to_i)
-end
-
-=end
+# def digit_list(number)
+#   number.to_s.chars.map(&:to_i)
+# end

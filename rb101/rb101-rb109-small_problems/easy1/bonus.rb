@@ -6,17 +6,12 @@ puts calculate_bonus(2800, true) == 1400
 puts calculate_bonus(1000, false) == 0
 puts calculate_bonus(50000, true) == 25000
 
+# ALTERNATIVE SOLUTIONS:
 
-=begin
+# (To account for odd numbers and cents.)
 
-ALTERNATIVE SOLUTIONS:
+# def calculate_bonus(salary, bonus)
+#   salary = salary.to_f.round(2)
 
-(To account for odd numbers and cents.)
-
-def calculate_bonus(salary, bonus)
-  salary = salary.to_f.round(2)
-
-  bonus ? ((salary / 2).round(2)) : 0
-end
-
-=end
+#   bonus ? ((salary / 2).round(2)) : 0
+# end

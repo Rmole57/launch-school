@@ -4,19 +4,14 @@ def repeat(string, number)
   end
 end
 
-repeat("Hello", 3)
+repeat('Hello', 3)
 
+# ALTERNATIVE SOLUTIONS:
 
-=begin
-
-ALTERNATIVE SOLUTIONS:
-
-def repeat(string, number)
-  counter = 0
-  until counter == number
-    puts string
-    counter += 1
-  end
-end
-
-=end
+# def repeat(string, number)
+#   counter = 0
+#   until counter == number
+#     puts string
+#     counter += 1
+#   end
+# end

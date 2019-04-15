@@ -17,29 +17,24 @@ vehicles = [
 
 count_occurrences(vehicles)
 
+# FURTHER EXPLORATION:
 
-=begin
+# QUESTION:
 
-FURTHER EXPLORATION:
+# Try to solve the problem when words are case insensitive, e.g. "suv" == "SUV".
 
-QUESTION:
+# ANSWER:
 
-Try to solve the problem when words are case insensitive, e.g. "suv" == "SUV".
+# def count_occurrences(arr)
+#   element_occurrences = {}
 
-ANSWER:
+#   arr.map! { |element| element.to_s.downcase }
 
-def count_occurrences(arr)
-  element_occurrences = {}
+#   arr.each do |element|
+#     element_occurrences[element] = arr.count(element)
+#   end
 
-  arr.map! { |element| element.to_s.downcase }
-
-  arr.each do |element|
-    element_occurrences[element] = arr.count(element)
-  end
-
-  element_occurrences.each do |key, value|
-    puts "#{key} => #{value}"
-  end
-end
-
-=end
+#   element_occurrences.each do |key, value|
+#     puts "#{key} => #{value}"
+#   end
+# end
