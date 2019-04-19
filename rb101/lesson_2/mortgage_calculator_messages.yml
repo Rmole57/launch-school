@@ -1,0 +1,8 @@
+welcome: "Welcome to the Mortgage Calculator!"
+loan: "Please enter the amount of your loan:"
+invalid_entry: "Sorry. Your entry is invalid."
+apr: "Please enter your Annual Percentage Rate:"
+duration: "Please enter your loan duration (in years):"
+result: "Your monthly mortgage payment is: $%{result}"
+again: "Would you like to calculate another monthly mortgage payment? ('Y' to calculate again)"
+bye: "Thanks for using the mortgage calculator. Good bye!"
