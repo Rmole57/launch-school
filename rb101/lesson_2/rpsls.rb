@@ -84,7 +84,7 @@ prompt("Welcome to #{VALID_CHOICES.join(', ')}!")
 prompt("First to #{POINTS} points wins!")
 sleep(3)
 
-# Main game loop
+# Main game loop.
 loop do
   # Sets player scores.
   player_score = 0
