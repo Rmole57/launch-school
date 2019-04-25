@@ -43,7 +43,8 @@ end
 
 prompt(format(translate('hi'), name: name))
 
-loop do # main loop
+# main loop
+loop do
   number1 = ''
   loop do
     prompt(translate('first_num'))
