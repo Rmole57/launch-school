@@ -78,7 +78,7 @@ def display_grand_winner(player_points, computer_points)
   end
 end
 
-# Welcome's user.
+# Welcomes user.
 system('clear')
 prompt("Welcome to #{VALID_CHOICES.join(', ')}!")
 prompt("First to #{POINTS} points wins!")
