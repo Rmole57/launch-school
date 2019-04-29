@@ -23,15 +23,16 @@ def convert_choice!(choice)
 end
 
 def scissors_or_spock
-  prompt("Did you mean 'scissors' or 'spock'?")
+  prompt("Did you mean scissors ('sc') or spock ('sp')?")
   gets.chomp
 end
 
 def retrieve_player_choice
   prompt("Choose one: #{VALID_CHOICES.join(', ')}")
+  prompt("NOTE: first letters are acceptable (example: 'r' == 'rock')")
   choice = gets.chomp
 
-  if choice.downcase == 's'
+  while choice.downcase == 's'
     choice = scissors_or_spock
   end
 
@@ -46,93 +47,74 @@ def valid_choice?(choice)
   end
 end
 
-def win?(first, second)
-  WINNING_COMBOS[first.to_sym].include?(second)
+def display_choices(player_choice, computer_choice)
+  prompt("You chose: #{player_choice}; Computer chose: #{computer_choice}")
 end
 
-def display_results(player, computer)
-  prompt("You chose: #{player}; Computer chose: #{computer}")
-
-  if win?(player, computer)
-    prompt("You won!")
-  elsif win?(computer, player)
-    prompt("Computer won!")
-  else
-    prompt("It's a tie!")
-  end
+def win_round?(first, second)
+  WINNING_COMBOS[first.to_sym].include?(second)
 end
 
 def display_score(player_score, computer_score)
   prompt("Score: You - #{player_score}, Computer - #{computer_score}")
 end
 
-def grand_winner?(score1, score2)
-  score1 == POINTS || score2 == POINTS
+def grand_winner?(score)
+  score == POINTS
 end
 
-def display_grand_winner(player_points, computer_points)
-  if player_points == POINTS
+def display_grand_winner(player, computer)
+  if grand_winner?(player)
     prompt("Congratulations! You're the Grand Winner!")
-  elsif computer_points == POINTS
+  elsif grand_winner?(computer)
     prompt("Sorry! The Computer is the Grand Winner!")
   end
 end
 
-# Welcomes user.
+# Game starts here.
 system('clear')
 prompt("Welcome to #{VALID_CHOICES.join(', ')}!")
 prompt("First to #{POINTS} points wins!")
 sleep(3)
 
-# Main game loop.
 loop do
-  # Sets player scores.
-  player_score = 0
-  computer_score = 0
-
-  # Game rounds loop.
-  until player_score == POINTS || computer_score == POINTS
+  player = { choice: '', score: 0 }
+  computer = { choice: '', score: 0 }
+  loop do
     system('clear')
-    # Displays current score.
-    display_score(player_score, computer_score)
 
-    # Sets and validates user's choice.
-    user_choice = ''
+    display_score(player[:score], computer[:score])
+
     loop do
-      user_choice = retrieve_player_choice
-      break if valid_choice?(user_choice)
+      player[:choice] = retrieve_player_choice
+      break if valid_choice?(player[:choice])
     end
 
-    # Sets computer's choice.
-    computer_choice = VALID_CHOICES.sample
+    computer[:choice] = VALID_CHOICES.sample
 
-    # Evaluates and displays results of current round.
-    display_results(user_choice, computer_choice)
+    display_choices(player[:choice], computer[:choice])
 
-    # Increments scores as necessary.
-    if win?(user_choice, computer_choice)
-      player_score += 1
-    elsif win?(computer_choice, user_choice)
-      computer_score += 1
-    end
-
-    # Displays updated score and end of round message.
-    display_score(player_score, computer_score)
-
-    # Displays grand winner if there is one, else proceeds to next round.
-    if grand_winner?(player_score, computer_score)
-      display_grand_winner(player_score, computer_score)
+    if win_round?(player[:choice], computer[:choice])
+      prompt("You won the round!")
+      player[:score] += 1
+    elsif win_round?(computer[:choice], player[:choice])
+      prompt("Computer won the round!")
+      computer[:score] += 1
     else
-      prompt("Next round starting soon...")
-      sleep(3)
+      prompt("It's a tie!")
     end
+
+    display_score(player[:score], computer[:score])
+
+    break if grand_winner?(player[:score]) || grand_winner?(computer[:score])
+    prompt("Next round starting soon...")
+    sleep(3)
   end
 
-  # Asks if user would like to play again.
+  display_grand_winner(player[:score], computer[:score])
   prompt("Do you want to play again? ('Y' to play again)")
   answer = gets.chomp
   break unless answer == 'y'
 end
 
-# Good bye message.
 prompt("Thank you for playing! Good bye!")
