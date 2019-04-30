@@ -14,4 +14,4 @@ puts multiply(5, 3) == 15
 # It will return a new array with the original array's elements repeated
 # the amount of times as the second number. This is happening because you
 # are multiplying the array object, not its individual elements, and the result
-# returns a new array built by concatenating copies of the original array.
+# returns a new array built by concatenating 'n' copies of the original array.
