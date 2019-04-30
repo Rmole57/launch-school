@@ -57,7 +57,7 @@ loop do
   end
 end
 
-# ALTERNATIVE SOLUTION (method:
+# ALTERNATIVE SOLUTION:
 
 # def compute_sum(number)
 #   total = 0
