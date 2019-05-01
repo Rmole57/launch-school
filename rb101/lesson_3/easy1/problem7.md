@@ -33,4 +33,4 @@ what will be the result?
 
 ANSWER:
 
-```42```
+`42`
