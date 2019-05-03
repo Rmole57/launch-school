@@ -38,9 +38,9 @@ the same object id while its values have been changed (reassigned to
 different Integer and String objects in this case).
 
 Also, Ruby passes in the object id of `munsters` to be used locally
-as `demo_hash`'s id. If Spot had reassigned `demo_hash` before
-"messing with" its values, he would've been in the clear because
-`demo_hash`'s object id would have been changed and thus the original
-`munsters` hash would have been safe. But, unfortunately for Spot, he
-did not, and the hash object being used in the method IS the original
-`munsters` hash.
+as `demo_hash`'s id. If Spot had initialized a new hash within his
+method and then used the `demo_hash` to build the `new_hash` iteratively
+he would've been in the clear because `new_hash`'s object id would have
+been unique and thus the original `munsters` hash would have been safe.
+But, unfortunately for Spot, he did not, and the hash object being used
+in the method IS the original `munsters` hash.
