@@ -206,6 +206,8 @@ def display_goodbye
   system 'clear'
 end
 
+# Game starts here:
+
 valid_first_move_setting?
 display_welcome
 
