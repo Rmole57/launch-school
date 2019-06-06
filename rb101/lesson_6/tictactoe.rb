@@ -36,7 +36,7 @@ def choose_first_move
       prompt "Sorry, invalid choice!"
       sleep 2
     end
-    choice == 'y' ? 'player' : 'computer'
+    choice.start_with('y') ? 'player' : 'computer'
   else
     FIRST_MOVE
   end
