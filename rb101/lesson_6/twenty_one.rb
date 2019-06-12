@@ -24,12 +24,20 @@ def initialize_deck
   DECK.clone
 end
 
+def continue
+  loop do
+    puts '(Press ENTER to continue)'
+    answer = gets
+    break if answer
+  end
+end
+
 def display_welcome
   system 'clear'
   prompt "Welcome to Twenty-One!"
   prompt "First to #{GAME_SCORE_LIMIT} wins!"
   prompt "Let's shuffle up and deal!"
-  sleep 1.5
+  continue
 end
 
 def deal!(deck, number_of_cards)
@@ -57,7 +65,7 @@ def aces_values!(cards)
   cards
 end
 
-def total(cards)
+def update_total(cards)
   hand = aces_values!(cards)
   hand.values.sum
 end
@@ -66,26 +74,48 @@ def card_list(cards)
   cards.keys.join(', ')
 end
 
-def display_game_score(dealer_score, player_score)
-  system 'clear'
-  prompt "Dealer Score: #{dealer_score} | Player Score: #{player_score}"
-end
-
 def display_hands(dealer_hand, player_hand, dealer_total, player_total)
-  puts LINE_BREAK
+  system 'clear'
   prompt "Dealer has: #{card_list(dealer_hand)} (TOTAL: #{dealer_total})"
   prompt "You have: #{card_list(player_hand)} (TOTAL: #{player_total})"
+end
+
+def hit!(hand, deck)
+  hand.merge!(deal!(deck, 1))
+end
+
+def valid_move?(move)
+  ['hit', 'stay'].include?(move)
+end
+
+def choose_move
+  player_choice = ''
+  loop do
+    puts LINE_BREAK
+    prompt "Would you like to hit or stay?"
+    player_choice = gets.chomp.downcase
+    break if valid_move?(player_choice)
+    prompt "Invalid choice! Please type either 'hit' or 'stay'."
+  end
+  player_choice
 end
 
 def display_choice(answer, participant)
   choice = answer.start_with?('h') ? 'hit' : 'stay'
   puts LINE_BREAK
   prompt "#{participant} #{choice}s!"
-  sleep 1
+  sleep 1.5
 end
 
-def hit!(hand, deck)
-  hand.merge!(deal!(deck, 1))
+def player_turn(dealer_hand, player_hand, dealer_total, player_total, deck)
+  loop do
+    display_hands(dealer_hand, player_hand, dealer_total, player_total)
+    player_choice = choose_move
+    break if player_choice == 'stay'
+    hit!(player_hand, deck)
+    player_total = update_total(player_hand)
+    break if busted?(player_total)
+  end
 end
 
 def reveal_card!(dealer_hand, deck)
@@ -93,11 +123,26 @@ def reveal_card!(dealer_hand, deck)
   hit!(dealer_hand, deck)
 end
 
-def busted?(hand)
-  hand > CARD_TOTAL_LIMIT
+def dealer_turn(dealer_hand, player_hand, dealer_total, player_total, deck)
+  unless busted?(player_total)
+    reveal_card!(dealer_hand, deck)
+    dealer_total = update_total(dealer_hand)
+
+    until dealer_total >= DEALER_LIMIT
+      display_hands(dealer_hand, player_hand, dealer_total, player_total)
+      display_choice('hit', 'Dealer')
+      hit!(dealer_hand, deck)
+      dealer_total = update_total(dealer_hand)
+      sleep 1
+    end
+  end
 end
 
-def game_won?(dealer_score, player_score)
+def busted?(hand_total)
+  hand_total > CARD_TOTAL_LIMIT
+end
+
+def grand_winner?(dealer_score, player_score)
   dealer_score >= GAME_SCORE_LIMIT || player_score >= GAME_SCORE_LIMIT
 end
 
@@ -132,6 +177,10 @@ def detect_grand_winner(dealer_score, player_score)
   end
 end
 
+def display_game_score(dealer_score, player_score)
+  prompt "Dealer Score: #{dealer_score} | Player Score: #{player_score}"
+end
+
 def display_round_result(dealer_total, player_total)
   puts LINE_BREAK
   result = detect_result(dealer_total, player_total)
@@ -147,19 +196,34 @@ def display_round_result(dealer_total, player_total)
   when :push
     prompt "Push!"
   end
-  sleep 2.5
 end
 
-def display_final_result(dealer_score, player_score)
-  grand_winner = detect_grand_winner(dealer_score, player_score)
+def display_end_of_round(dealer_total, player_total, dealer_score, player_score)
+  display_round_result(dealer_total, player_total)
   display_game_score(dealer_score, player_score)
+  continue
+end
+
+def display_final_result(dealer_total, player_total, dealer_score, player_score)
+  display_round_result(dealer_total, player_total)
+  display_game_score(dealer_score, player_score)
+  grand_winner = detect_grand_winner(dealer_score, player_score)
   prompt "The #{grand_winner} is the GRAND WINNER!"
 end
 
 def play_again?
-  prompt "Play again? (y or n)"
-  answer = gets.chomp.downcase
-  answer.start_with?('y') ? true : false
+  answer = ''
+  loop do
+    prompt "Play again? (y or n)"
+    answer = gets.chomp.downcase
+    break if answer.start_with?('y', 'n')
+    prompt "Invalid choice! (Please choose 'y' or 'n')"
+  end
+  if answer.start_with?('y')
+    true
+  elsif answer.start_with?('n')
+    false
+  end
 end
 
 def display_goodbye
@@ -174,63 +238,35 @@ display_welcome
 loop do
   dealer_score = 0
   player_score = 0
+  dealer_total = 0
+  player_total = 0
 
-  until game_won?(player_score, dealer_score)
+  loop do
     deck = initialize_deck
-
     dealer = initialize_dealer_hand(deck)
     player = initialize_player_hand(deck)
 
-    dealer_total = total(dealer)
-    player_total = total(player)
+    dealer_total = update_total(dealer)
+    player_total = update_total(player)
 
-    display_game_score(dealer_score, player_score)
+    player_turn(dealer, player, dealer_total, player_total, deck)
+    player_total = update_total(player)
 
-    until busted?(player_total)
-      display_hands(dealer, player, dealer_total, player_total)
-
-      prompt "Would you like to (h)it or (s)tay?"
-      player_choice = gets.chomp.downcase
-
-      if player_choice.start_with?('s', 'h')
-        display_choice(player_choice, 'Player')
-      else
-        prompt "Invalid choice!"
-      end
-
-      if player_choice.start_with?('s')
-        break
-      elsif player_choice.start_with?('h')
-        hit!(player, deck)
-        player_total = total(player)
-      end
-    end
-
-    unless busted?(player_total)
-      display_game_score(dealer_score, player_score)
-
-      reveal_card!(dealer, deck)
-      dealer_total = total(dealer)
-
-      until dealer_total >= DEALER_LIMIT
-        display_hands(dealer, player, dealer_total, player_total)
-        display_choice('hit', 'Dealer')
-        hit!(dealer, deck)
-        dealer_total = total(dealer)
-        sleep 1
-      end
-    end
-
-    display_hands(dealer, player, dealer_total, player_total)
+    dealer_turn(dealer, player, dealer_total, player_total, deck)
+    dealer_total = update_total(dealer)
 
     round_winner = detect_round_winner(dealer_total, player_total)
     dealer_score += 1 if round_winner == 'dealer'
     player_score += 1 if round_winner == 'player'
 
-    display_round_result(dealer_total, player_total)
+    display_hands(dealer, player, dealer_total, player_total)
+
+    break if grand_winner?(player_score, dealer_score)
+
+    display_end_of_round(dealer_total, player_total, dealer_score, player_score)
   end
 
-  display_final_result(dealer_score, player_score)
+  display_final_result(dealer_total, player_total, dealer_score, player_score)
   break unless play_again?
 end
 
