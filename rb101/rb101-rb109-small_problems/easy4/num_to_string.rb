@@ -34,8 +34,11 @@ puts integer_to_string(5000) == '5000'
 
 # FURTHER EXPLORATION:
 
-# Could not find any "bang" methods that do not having
-# non-mutating and do not mutate the caller.
+# Could only find one "bang" method that had no 
+# non-mutating equivalent in its class, Array#sort_by!
+# However, there is the non-mutating Enumerable#sort_by
+# that Array objects have access to so that could be
+# considered the non-mutating option.
 
 # String mutating methods without the "bang":
 # <<
