@@ -20,8 +20,24 @@ p fibonacci(20) == 6765
 #   fibonacci(nth - 1) + fibonacci(nth - 2)
 # end
 
-# TAIL-RECURSIVE SOLUTION:
+# TAIL-RECURSIVE SOLUTIONS:
 
+# 1)
+# def fibonacci_tail(nth, acc1, acc2)
+#   if nth == 1
+#     acc1
+#   elsif nth == 2
+#     acc2
+#   else
+#     fibonacci_tail(nth - 1, acc2, acc2 + acc1)
+#   end
+# end
+
+# def fibonacci(nth)
+#   fibonacci_tail(nth, 1, 1)
+# end
+
+# 2)
 # def fibonacci(n, depth = 2, last_two = [1, 1])
 #   return last_two.last if n <= depth
 #   fibonacci(n, depth + 1, [last_two.last, last_two.sum])
