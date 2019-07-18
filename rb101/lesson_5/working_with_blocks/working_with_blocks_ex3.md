@@ -50,7 +50,7 @@ f) Yes, used by `puts`
 a) 2
 b) method call (`puts`)
 c) Each sub-array
-d) Yes, outputs a string representation an Integer
+d) Yes, outputs a string representation of an Integer
 e) `nil`
 f) No
 

@@ -22,7 +22,7 @@ array that fit the criteria of the block. We assign the `hash` block
 argument to each of the elements in the original array (which in this
 case are hashes).
 
-Within the outer block is a `all?` method call on each hash object, which
+Within the outer block is an `all?` method call on each hash object, which
 creates an inner block. This inner block is called on each key-value pair
 within each hash. `all?` returns a Boolean, `true` if all elements of the
 collection satisfy the inner block's requirements, `false` if any do not.

@@ -70,7 +70,7 @@ b) comparison `>`
 c) Current element in iteration
 d) None
 e) Boolean
-f) Yes, to evaluated by `if`
+f) Yes, to be evaluated by `if`
 
 a) 3-5
 b) conditional `if`

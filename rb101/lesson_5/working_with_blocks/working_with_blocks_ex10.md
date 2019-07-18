@@ -22,16 +22,16 @@ Expected output:
 [[[2, 3], [4, 5]], [6, 7]]
 ```
 
-The first line has the `[[[1, 2], [3, 4]], [5, 6]]` calling the `map` method
+The first line has the array `[[[1, 2], [3, 4]], [5, 6]]` calling the `map` method
 for each of its elements: `[[1, 2], [3, 4]]` and `[5, 6]`. Within this outer
-block is an other `map` call being invoked on each of the previously mentioned
+block is another `map` call being invoked on each of the previously mentioned
 elements.
 
 The inner block for this `map` method first checks each of its elements
 to see if they're an integer or array type object. This can be done quite
 quickly by comparing the string representations of the objects. Since all
 of the integer elements are single digits, calling `to_s` on an Integer
-returns a string of size `1`. However, callin `to_s` on an array returns string
+returns a string of size `1`. However, calling `to_s` on an array returns string
 representation of the array, brackets and all, the size of which would never
 come out to `1`.
 
