@@ -1,11 +1,14 @@
 def balanced?(string)
   paren_only = string.scan(/\(|\)/)
+
+  return true if paren_only.empty?
+
   open_paren = paren_only.count('(')
   closed_paren = paren_only.count(')')
 
-  return false if open_paren != closed_paren || paren_only.last == '('
-
-  true
+  open_paren == closed_paren &&
+    paren_only.first == '(' &&
+    paren_only.last == ')'
 end
 
 p balanced?('What (is) this?') == true
