@@ -21,7 +21,7 @@ class String
 end
 
 class Move
-  VALUES = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
+  VALUES = %w(Rock Paper Scissors Lizard Spock).freeze
 
   def to_s
     self.class.to_s
@@ -59,11 +59,15 @@ class Spock < Move
 end
 
 class Player
-  attr_accessor :move, :name, :history
+  attr_accessor :move, :name, :history, :score
 
   def initialize
     set_name
     @history = History.new(name)
+  end
+
+  def reset_score
+    self.score = 0
   end
 end
 
@@ -71,8 +75,8 @@ class Human < Player
   def choose
     choice = nil
     loop do
-      puts "Please choose Rock, Paper, Scissors, " \
-           "Lizard, or Spock:"
+      puts 'Please choose Rock, Paper, Scissors, ' \
+           'Lizard, or Spock:'
       puts "*NOTE: Case insensitive/abbreviated forms " \
            "are allowed (i.e., 'ro' = 'Rock')"
       choice = gets.chomp.capitalize
@@ -80,7 +84,7 @@ class Human < Player
         choice = format_choice(choice)
         break
       end
-      puts "Sorry, invalid choice."
+      puts 'Sorry, invalid choice.'
     end
     self.move = choice.to_move
   end
@@ -89,12 +93,12 @@ class Human < Player
 
   def set_name
     system 'clear'
-    n = ""
+    n = ''
     loop do
       puts "What's your name?"
       n = gets.chomp
       break if n =~ /^\w/
-      puts "Sorry, that name is invalid."
+      puts 'Sorry, that name is invalid.'
     end
     self.name = n
   end
@@ -106,10 +110,10 @@ class Human < Player
   def scissors_or_spock?
     answer = nil
     loop do
-      puts "Did you mean Scissors or Spock?"
+      puts 'Did you mean Scissors or Spock?'
       answer = gets.chomp.capitalize
       break if valid_move?(answer) && answer =~ /^S\w/
-      puts "Sorry, invalid choice."
+      puts 'Sorry, invalid choice.'
     end
     answer
   end
@@ -140,8 +144,8 @@ module Tendency
   end
 
   def no_paper_scissor_heavy
-    ['Scissors', 'Scissors', 'Scissors',
-     'Scissors', 'Rock', 'Lizard', 'Spock'].sample.to_move
+    %w(Scissors Scissors Scissors Scissors
+       Rock Lizard Spock).sample.to_move
   end
 
   def forgot_a_move
@@ -154,7 +158,7 @@ module Tendency
 end
 
 class Computer < Player
-  BOTS = ['R2D2', 'Hal', 'Chappie', 'Sonny', 'Number 5']
+  BOTS = ['R2D2', 'Hal', 'Chappie', 'Sonny', 'Number 5'].freeze
 
   include Tendency
 
@@ -240,39 +244,25 @@ class History
   end
 end
 
-class Score
-  LIMIT = 7
-
-  attr_accessor :human, :computer
-
-  def initialize
-    @human = 0
-    @computer = 0
-  end
-
-  def limit_reached?
-    human >= LIMIT || computer >= LIMIT
-  end
-end
-
 # Game Orchestration Engine
 class RPSgame
-  RULES = ["Scissors cuts Paper", "Paper covers Rock",
-           "Rock crushes Lizard", "Lizard poisons Spock",
-           "Spock smashes Scissors", "Scissors decapitates Lizard",
-           "Lizard eats Paper", "Paper disproves Spock",
-           "Spock vaporizes Rock", "Rock crushes Scissors"]
+  RULES = ['Scissors cuts Paper', 'Paper covers Rock',
+           'Rock crushes Lizard', 'Lizard poisons Spock',
+           'Spock smashes Scissors', 'Scissors decapitates Lizard',
+           'Lizard eats Paper', 'Paper disproves Spock',
+           'Spock vaporizes Rock', 'Rock crushes Scissors'].freeze
+  SCORE_LIMIT = 7
 
   def initialize
     @human = Human.new
-    @computer = (Computer::BOTS).sample.to_bot
+    @computer = Computer::BOTS.sample.to_bot
   end
 
   def play
     start_of_game
     loop do
-      reset_score
-      until score.limit_reached?
+      reset_game_score
+      until score_limit_reached?
         display_score
         human.choose
         computer.choose
@@ -287,7 +277,6 @@ class RPSgame
   private
 
   attr_reader :human, :computer
-  attr_accessor :score
 
   def display_welcome_message
     puts "Hi, #{human.name}! Welcome to Rock, Paper, " \
@@ -296,13 +285,13 @@ class RPSgame
   end
 
   def display_rules
-    puts "Game Rules:"
+    puts 'Game Rules:'
     puts RULES
     puts
-    puts "First to #{Score::LIMIT} wins!"
+    puts "First to #{SCORE_LIMIT} wins!"
     puts
     loop do
-      puts "Press Enter to continue..."
+      puts 'Press Enter to continue...'
       answer = gets.chomp
       break if answer.empty?
       puts "Sorry, that's invalid."
@@ -317,14 +306,19 @@ class RPSgame
     system 'clear'
   end
 
-  def reset_score
-    self.score = Score.new
+  def reset_game_score
+    human.reset_score
+    computer.reset_score
+  end
+
+  def score_limit_reached?
+    human.score >= SCORE_LIMIT || computer.score >= SCORE_LIMIT
   end
 
   def display_score
     system 'clear'
-    puts "Current Score - #{human.name}: #{score.human}, " \
-         "#{computer.name}: #{score.computer}"
+    puts "Current Score - #{human.name}: #{human.score}, " \
+         "#{computer.name}: #{computer.score}"
   end
 
   def record_win(winner, loser)
@@ -339,12 +333,12 @@ class RPSgame
   end
 
   def human_win
-    score.human += 1
+    human.score += 1
     record_win(human, computer)
   end
 
   def computer_win
-    score.computer += 1
+    computer.score += 1
     record_win(computer, human)
   end
 
@@ -362,7 +356,7 @@ class RPSgame
     players.each do |player|
       player.history.record.each do |move, results|
         unless results.empty?
-          percentage = (results.count('W').fdiv(results.size)) * 100
+          percentage = results.count('W').fdiv(results.size) * 100
           player.history.win_percentages[move] = percentage.round(1)
         end
       end
@@ -397,7 +391,7 @@ class RPSgame
   end
 
   def grand_winner
-    if score.human > score.computer
+    if human.score > computer.score
       human.name
     else
       computer.name
@@ -412,7 +406,7 @@ class RPSgame
   def play_again?
     answer = nil
     loop do
-      puts "Would you like to play again? (y/n)"
+      puts 'Would you like to play again? (y/n)'
       answer = gets.chomp.downcase
       break if answer.start_with?('y', 'n')
       puts "Sorry, must start with 'y' or 'n'."
@@ -422,8 +416,8 @@ class RPSgame
 
   def display_goodbye_message
     system 'clear'
-    puts "Thanks for playing Rock, Paper, Scissors, " \
-          "Lizard, Spock. Good bye!"
+    puts 'Thanks for playing Rock, Paper, Scissors, ' \
+          'Lizard, Spock. Good bye!'
     sleep 2
   end
 
