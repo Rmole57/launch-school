@@ -240,8 +240,6 @@ module TicTacToe
     FIRST_MOVE = 'choose'
     SCORE_LIMIT = 5
 
-    attr_reader :board
-
     def initialize
       @board = Board.new
       @human = Human.new(board)
@@ -263,7 +261,7 @@ module TicTacToe
 
     private
 
-    attr_reader :human, :computer
+    attr_reader :board, :human, :computer
 
     def clear
       system 'clear'
