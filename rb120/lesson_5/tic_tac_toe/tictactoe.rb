@@ -367,8 +367,8 @@ module TicTacToe
     end
 
     def display_board
-      puts "#{human.name} is a #{human.marker}. " \
-           "#{computer.name} is a #{computer.marker}."
+      puts "#{human.name} is a '#{human.marker}'. " \
+           "#{computer.name} is a '#{computer.marker}'."
       puts
       board.draw
       puts
