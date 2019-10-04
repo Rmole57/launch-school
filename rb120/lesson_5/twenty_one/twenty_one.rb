@@ -166,7 +166,6 @@ module TwentyOne
       @player = Player.new
       @dealer = Dealer.new
       @deck = Deck.new
-      @card_reveal = nil
     end
 
     def play
