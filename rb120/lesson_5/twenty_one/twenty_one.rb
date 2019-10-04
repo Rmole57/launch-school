@@ -3,7 +3,7 @@ module TwentyOne
     CARD_TOTAL_LIMIT = 21
 
     def show_hand
-      cards.map(&:to_s).join(', ')
+      puts cards.map(&:to_s).join(', ')
     end
 
     def card_total
@@ -56,6 +56,12 @@ module TwentyOne
     def to_s
       name
     end
+
+    def display_cards
+      puts "------#{self}'s hand------"
+      show_hand
+      puts "=> Total: #{card_total}"
+    end
   end
 
   class Player < Participant
@@ -78,6 +84,27 @@ module TwentyOne
       super
       @name = CPU_NAMES.sample
     end
+
+    def display_cards
+      if card_reveal
+        super
+      else
+        puts "#{cards.first}, ??"
+        puts "=> Total: ??"
+      end
+    end
+
+    def reveal_card
+      self.card_reveal = true
+    end
+
+    def hide_card
+      self.card_reveal = false
+    end
+
+    private
+
+    attr_accessor :card_reveal
   end
 
   class Deck
@@ -183,7 +210,6 @@ module TwentyOne
     private
 
     attr_reader :player, :dealer, :deck
-    attr_accessor :card_reveal
 
     def clear
       system 'clear'
@@ -257,13 +283,9 @@ module TwentyOne
       dealer.reset_hand
     end
 
-    def hide_dealer_card
-      self.card_reveal = false
-    end
-
     def deal_initial_cards
       dealer.cards << deck.deal_card << deck.deal_card
-      hide_dealer_card
+      dealer.hide_card
       player.cards << deck.deal_card << deck.deal_card
     end
 
@@ -273,34 +295,17 @@ module TwentyOne
       puts
     end
 
-    def display_dealer_cards
-      puts "------#{dealer}'s hand------"
-      if card_reveal
-        puts dealer.show_hand
-        puts "=> Total: #{dealer.card_total}"
-      else
-        puts "#{dealer.cards.first}, ??"
-        puts "=> Total: ??"
-      end
-    end
-
-    def display_player_cards
-      puts "------#{player}'s hand------"
-      puts player.show_hand
-      puts "=> Total: #{player.card_total}"
-    end
-
-    def display_cards
-      display_dealer_cards
+    def display_participants_cards
+      dealer.display_cards
       puts
-      display_player_cards
+      player.display_cards
       puts
     end
 
     def display_game
       clear
       display_score
-      display_cards
+      display_participants_cards
     end
 
     def hit_or_stay
@@ -333,12 +338,8 @@ module TwentyOne
       end
     end
 
-    def reveal_dealer_card
-      self.card_reveal = true
-    end
-
     def dealer_turn
-      reveal_dealer_card
+      dealer.reveal_card
       loop do
         display_game
         if dealer.card_total < DEALER_MUST_HIT_TOTAL
