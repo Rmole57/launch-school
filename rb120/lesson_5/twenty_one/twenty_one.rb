@@ -252,19 +252,19 @@ module TwentyOne
       pause
     end
 
-    def hide_dealer_card
-      self.card_reveal = false
-    end
-
     def reset_round
       deck.reset
       player.reset_hand
       dealer.reset_hand
-      hide_dealer_card
+    end
+
+    def hide_dealer_card
+      self.card_reveal = false
     end
 
     def deal_initial_cards
       dealer.cards << deck.deal_card << deck.deal_card
+      hide_dealer_card
       player.cards << deck.deal_card << deck.deal_card
     end
 
