@@ -310,7 +310,8 @@ module TwentyOne
         puts 'Would you like to hit or stay? ' \
              "(any abbreviation of 'hit' or 'stay' is acceptable)"
         choice = gets.chomp.downcase
-        break if VALID_MOVES.any? { |move| move.start_with?(choice) }
+        break if VALID_MOVES.any? { |move| move.start_with?(choice) } &&
+                 !choice.empty?
         puts "Invalid choice!"
       end
       choice.start_with?('h') ? 'hit' : 'stay'

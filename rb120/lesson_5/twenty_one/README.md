@@ -33,6 +33,10 @@ to be considered a 1 and your total would be 13 (2 + 1 + 10 = 13).
 
 ### Design Notes:
 
+- `Player`'s name choice is relatively lenient. The only requirements are that
+the name must begin with an alphabetical letter, it cannot end with a whitespace
+character, and no special characters are allowed.
+
 - You'll notice a `card_reveal` instance variable for the `TwentyOneGame` class.
 This is an instance variable with a Boolean value that signifies whether or not
 the `Dealer` should indeed be showing their second card at particular points in
