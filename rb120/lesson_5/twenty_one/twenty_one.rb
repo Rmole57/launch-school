@@ -3,11 +3,7 @@ module TwentyOne
     CARD_TOTAL_LIMIT = 21
 
     def show_hand
-      case cards.size
-      when 1 then "#{cards.first}, ??"
-      else
-        cards.map(&:to_s).join(', ')
-      end
+      cards.map(&:to_s).join(', ')
     end
 
     def card_total
@@ -68,7 +64,7 @@ module TwentyOne
       loop do
         puts 'Please enter your name:'
         answer = gets.chomp
-        break if answer =~ /^\w/
+        break if answer =~ /^[a-zA-Z][\w\s]*[\w]+$/
         puts 'Invalid entry!'
       end
       self.name = answer
@@ -170,6 +166,7 @@ module TwentyOne
       @player = Player.new
       @dealer = Dealer.new
       @deck = Deck.new
+      @card_reveal = nil
     end
 
     def play
@@ -187,6 +184,7 @@ module TwentyOne
     private
 
     attr_reader :player, :dealer, :deck
+    attr_accessor :card_reveal
 
     def clear
       system 'clear'
@@ -254,14 +252,19 @@ module TwentyOne
       pause
     end
 
+    def hide_dealer_card
+      self.card_reveal = false
+    end
+
     def reset_round
       deck.reset
       player.reset_hand
       dealer.reset_hand
+      hide_dealer_card
     end
 
     def deal_initial_cards
-      dealer.cards << deck.deal_card
+      dealer.cards << deck.deal_card << deck.deal_card
       player.cards << deck.deal_card << deck.deal_card
     end
 
@@ -271,14 +274,27 @@ module TwentyOne
       puts
     end
 
-    def display_cards
+    def display_dealer_cards
       puts "------#{dealer}'s hand------"
-      puts dealer.show_hand
-      puts "=> Total: #{dealer.card_total}"
-      puts
+      if card_reveal
+        puts dealer.show_hand
+        puts "=> Total: #{dealer.card_total}"
+      else
+        puts "#{dealer.cards.first}, ??"
+        puts "=> Total: ??"
+      end
+    end
+
+    def display_player_cards
       puts "------#{player}'s hand------"
       puts player.show_hand
       puts "=> Total: #{player.card_total}"
+    end
+
+    def display_cards
+      display_dealer_cards
+      puts
+      display_player_cards
       puts
     end
 
@@ -294,7 +310,7 @@ module TwentyOne
         puts 'Would you like to hit or stay? ' \
              "(any abbreviation of 'hit' or 'stay' is acceptable)"
         choice = gets.chomp.downcase
-        break if VALID_MOVES.any? { |move| move.include?(choice) }
+        break if VALID_MOVES.any? { |move| move.start_with?(choice) }
         puts "Invalid choice!"
       end
       choice.start_with?('h') ? 'hit' : 'stay'
@@ -317,12 +333,12 @@ module TwentyOne
       end
     end
 
-    def dealer_reveal_card
-      dealer.add_card(deck)
+    def reveal_dealer_card
+      self.card_reveal = true
     end
 
     def dealer_turn
-      dealer_reveal_card
+      reveal_dealer_card
       loop do
         display_game
         if dealer.card_total < DEALER_MUST_HIT_TOTAL
@@ -373,7 +389,7 @@ module TwentyOne
     def record_and_display_round_result
       clear
       record_round_result
-      dealer_reveal_card if player.busted?
+      reveal_dealer_card if player.busted?
       display_game
       display_busted if someone_busted?
       display_round_result
@@ -396,13 +412,11 @@ module TwentyOne
     end
 
     def play_round
-      1.times do
-        reset_round
-        deal_initial_cards
-        player_turn
-        break if someone_busted?
-        dealer_turn
-      end
+      reset_round
+      deal_initial_cards
+      player_turn
+      return if someone_busted?
+      dealer_turn
     end
 
     def play_game
@@ -433,6 +447,4 @@ module TwentyOne
   end
 end
 
-include TwentyOne
-
-TwentyOneGame.new.play
+TwentyOne::TwentyOneGame.new.play

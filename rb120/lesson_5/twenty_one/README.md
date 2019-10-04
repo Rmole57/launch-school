@@ -33,8 +33,12 @@ to be considered a 1 and your total would be 13 (2 + 1 + 10 = 13).
 
 ### Design Notes:
 
-- You'll notice the `#dealer_reveal_card` is just a simple, one-line
-method. Though I could just use `dealer.add_card(deck)` throughout the
-rest of my program, rather than creating a whole a new method, I decided
-to do the latter to be more explicit and better capture the intent of the
-line when it's being used.
+- You'll notice a `card_reveal` instance variable for the `TwentyOneGame` class.
+This is an instance variable with a Boolean value that signifies whether or not
+the `Dealer` should indeed be showing their second card at particular points in
+the game.
+
+- The `reveal_dealer_card` and `hide_dealer_card` methods, though simple one-line
+methods, were created for the purposes of explicitness and clarification of intent.
+Each method name is explaining what the `card_reveal` value change is meant to be
+be communicating.
