@@ -119,6 +119,10 @@ module TicTacToe
     def reset_score
       self.score = 0
     end
+
+    def to_s
+      name
+    end
   end
 
   class Human < Player
@@ -296,7 +300,7 @@ module TicTacToe
 
     def display_game_greeting
       clear
-      puts "Hi, #{human.name}! Today you'll be facing off " \
+      puts "Hi, #{human}! Today you'll be facing off " \
            "against #{computer.name}!"
       sleep 2
       clear
@@ -350,7 +354,7 @@ module TicTacToe
     def display_turn
       clear
       player_turn = @current_marker == human.marker ? human : computer
-      puts "It's #{player_turn.name}'s turn!"
+      puts "It's #{player_turn}'s turn!"
       sleep 1.5
     end
 
@@ -360,13 +364,13 @@ module TicTacToe
     end
 
     def display_score
-      puts "Score: #{human.name} - #{human.score}, " \
-           "#{computer.name} - #{computer.score}"
+      puts "Score: #{human} - #{human.score}, " \
+           "#{computer} - #{computer.score}"
     end
 
     def display_board
-      puts "#{human.name} is a '#{human.marker}'. " \
-           "#{computer.name} is a '#{computer.marker}'."
+      puts "#{human} is a '#{human.marker}'. " \
+           "#{computer} is a '#{computer.marker}'."
       puts
       board.draw
       puts
@@ -410,9 +414,9 @@ module TicTacToe
     def display_round_result
       case board.winning_marker
       when human.marker
-        puts "#{human.name} won this round!"
+        puts "#{human} won this round!"
       when computer.marker
-        puts "#{computer.name} won this round!"
+        puts "#{computer} won this round!"
       else
         puts "It's a tie!"
       end
@@ -443,7 +447,7 @@ module TicTacToe
 
       clear
       display_score
-      puts "#{grand_winner.name} is the Grand Winner!"
+      puts "#{grand_winner} is the Grand Winner!"
       puts
     end
 
@@ -472,7 +476,7 @@ module TicTacToe
 
     def display_goodbye_message
       clear
-      puts "Thanks for playing Tic Tac Toe, #{human.name}! Goodbye!"
+      puts "Thanks for playing Tic Tac Toe, #{human}! Goodbye!"
       sleep 2
       clear
     end
