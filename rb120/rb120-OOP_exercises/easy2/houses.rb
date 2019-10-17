@@ -41,7 +41,7 @@ puts "Home 2 is more expensive" if home2 > home1
 # According to the Ruby docs, "The Comparable mixin is used by classes whose
 # objects may be ordered." So any object whose main attribute is a String or
 # an Integer may be good candidates for mixing in the Comparable module. For
-# example, if we had a Surname class that kept track of the Surnames of authors
+# example, if we had a Surname class that kept track of the Surnames of authors for
 # Books in a Library. By nature, you know you're going to be dealing with a String
 # object and you would most likely be alphabetizing these Surname objects. So this
 # might be a good time to mix in the Comparable module and include it in the Surname
