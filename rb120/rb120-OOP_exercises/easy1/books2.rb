@@ -30,10 +30,10 @@ puts %(book = #{book}.)
 # I personally think it's better to create and initialize at the same
 # time for a few of reaons. First, the object is instantiated with
 # intent and purpose. It is given a unique state immediately rather
-# than later. This gives us less lines execute when it comes to writing
+# than later. This gives us less lines to execute when it comes to writing
 # our program.
 
-# But more importantly, there are methods that rely on those two states.
+# But more importantly, there are methods that rely on those two attributes.
 # In this case, the #to_s method relies on the info found in the values
 # of @author and @title. So by giving ourselves extra steps to execute in
 # the program, we run the risk of omitting necessary information that other
@@ -41,6 +41,7 @@ puts %(book = #{book}.)
 
 # Another reason is accessibility for modification. Depending on the
 # requirements of the program we may not want the user the ability to modify
-# data once it's already been inputted as the data might be considered
-# sensitive. So it might be best to stick with the assigning of states/attributes
+# data once it's already been inputted, as the data might be considered
+# sensitive. So it might be best to stick with the assigning of instance variables
+# (which are considered attributes if they are made available outside of the class)
 # upon instantiation rather than later.

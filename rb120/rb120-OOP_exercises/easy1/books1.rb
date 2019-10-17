@@ -40,7 +40,8 @@ puts %(book = #{book}.)
 
 # We can't use attr_writer because it does not create getter methods
 # and for the reasons stated above, that it was the program requires
-# to function properly. Else we'll get an 'undefined method' error.
+# to function properly. Else we'll get an 'NoMethodError: undefined method'
+# error.
 
 # We technically could use attr_accessor, as it creates getter
 # methods, but, given the problem prompt, we have received no
@@ -72,12 +73,12 @@ puts %(book = #{book}.)
 # increased clarity and explicitness. However, the advantage in writing
 # your getter methods is the ability to add extra functionality. For example,
 # if you had an instance variable @name, you could make sure it is always
-# properly formatted when accessed by writing the manual getter method like so:
+# properly formatted when accessed by manually writing the getter method like so:
 
 # def name
 #   @name.capitalize
 # end
 
-# This way whenever a user accesses this object's name the value that will
-# be returned is will be the capitalized version of @name. You cannot do this
+# This way, whenever a user accesses this object's name the value that will
+# be returned will be the capitalized version of @name. You cannot do this
 # with Ruby's shorthand attr_* methods.

@@ -40,7 +40,7 @@ end
 
 # Question:
 
-# Would it make sense to define a wheels method in Vehicle even though all
+# Would it make sense to define a #wheels method in Vehicle even though all
 # of the remaining classes would be overriding it? Why or why not? If you
 # think it does make sense, what method body would you write?
 
@@ -64,12 +64,12 @@ end
 # However, this scenario is very impractical, as realistically there will
 # be a growing amount of Vehicle sub-classes, all with varying amounts of
 # wheels. And what about Vehicles with no wheels? Like boats, planes and
-# snowmobiles? With a generic #wheels method in the super class you'll
+# snowmobiles? With a generic #wheels method in the superclass you'll
 # soon find yourself writing a very long, complex and messy bit of code
 # to keep track of all the wheels.
 
 # Maybe we could create another class to inherit from Vehicle and that
-# vehicles with wheels could inherit from, call it WheeledVehicles. But
+# Vehicles with wheels could inherit from, call it WheeledVehicles. But
 # then you still run into the problem of the varying amounts of wheels.
 # It doesn't make total sense to have a default wheels value, but if you
 # really wanted to, I guess the best default value would be the most common
@@ -96,18 +96,20 @@ end
 
 # But again, this seems a bit impractical. Most, if not all, sub-classes from
 # Vehicle will most likely override a Vehicle#wheels method and vehicles that
-# don't have wheels will have no use for that method at all, in fact they might
+# don't have wheels will have no use for that method at all. In fact, they might
 # have to override the method to ensure that they don't inherit that method and
 # return 0 from their #wheels method. That seems a bit unnecessary for a Boat
 # class to contain a #wheels method simply because we wanted to include a default
-# #wheels method in the Vehicle super class.
+# #wheels method in the Vehicle superclass.
 
-# The whole point of a super class is to contain common states and behaviors of
-# related classes that inherit from it so as to avoid redundancy in your class
-# definitions' code. If most classes override that method (and some unnecessarily
-# having to do so because of your inclusion of it in the super class), it doesn't
-# seem that you accomplish this aspect of super classes. In fact, you seem to be
-# doing quite the opposite (and violating the DRY principle!).
+# The whole point of a super class is to contain/group common behaviors and attributes
+# (their methods not their values, which are the values of instance variables directly
+# tied to the object as part of its state and thus NOT inheritable) of related classes
+# that inherit from it so as to avoid redundancy in your class definitions' code.
+# If most classes override that method (and some unnecessarily having to do so because
+# of your inclusion of it in the superclass), it doesn't seem that you accomplish this
+# aspect of superclasses. In fact, you seem to be doing quite the opposite (and violating
+# the DRY principle!).
 
 # In the end, is it possible to implement a default Vehicle#wheels method? Sure.
 # Does it really make sense and is it practical and efficient? I don't believe so.

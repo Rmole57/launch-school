@@ -68,8 +68,8 @@ puts name
 # '@name' is referencing the String object "42". So the 'upcase' method
 # still works on "42" that @name is referencing, and the operation '+= 1'
 # still works on the Integer object 42 that 'name' is referencing. Thus
-# resulting in "42" and 43 for the output, respectively. Also, keep in mind
-# that += is considered reassignment (or "Abbreviated Assignment"), which is
+# resulting in 42 and 43 for the output, respectively. Keep in mind that
+# += is considered reassignment (or "Abbreviated Assignment"), which is
 # non-destructive. So 'name' is being reassigned to the NEW Integer object, 43.
 # Also, it's worth noting that Integers are immutable objects (they cannot be
 # mutated).

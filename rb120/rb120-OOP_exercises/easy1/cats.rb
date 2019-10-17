@@ -63,12 +63,12 @@ puts pudding, butterscotch
 # the color of Squirrels isn't important in their description. We would be
 # assigning a useless piece of data to the Squirrel class. It all really
 # depends on how you plan on implementing the sub-classes of the Pet
-# super class.
+# superclass.
 
 # Another problem, and perhaps even worse, is if you have an already
 # existing program and sub-classes inheriting from Pet. Odds are you
 # will have written a bunch of code instantiating objects of classes
-# that inherit from the Pet super class. One change in its implementation
+# that inherit from the Pet superclass. One change in its implementation
 # could derail your whole program unless you go through and fix every single
 # line of code to adhere to the new implementation.
 
@@ -118,3 +118,12 @@ puts pudding, butterscotch
 #     @colors = colors
 #   end
 # end
+
+# Important to note here that including an #initialize method in a module like in
+# this example is purely for demonstration/exploration purposes. In reality, it's
+# probably not best to do this because in a way, it goes against what module is really
+# intended for, to group common behaviors and namespacing. #initialize is typically used
+# in constructs that can create instances, as it is automatically called when the Class#new
+# method is called. However, modules CANNOT create instances! Only classes can! So the above
+# code should work as expected, but from a design/intent standpoint, it probably isn't the
+# best practice.
