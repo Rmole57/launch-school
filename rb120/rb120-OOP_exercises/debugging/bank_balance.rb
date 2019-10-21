@@ -127,9 +127,9 @@ p account.balance         # => 50
 # puts mike.name            # => BOB
 
 # Also might be worth noting that if you re-assign the instance
-# variable to an altered version of the argument, the setter method
-# will still return the original argument while the instance variable
-# will be re-assigned to the altered version:
+# variable to an altered version of the argument (non-mutated),
+# the setter method will still return the original argument while
+# the instance variable will be re-assigned to the altered version:
 
 # class Person
 #   attr_reader :name
