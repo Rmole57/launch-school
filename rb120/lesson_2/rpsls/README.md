@@ -17,7 +17,7 @@
 
 ### General Gameplay:
 
-Players are pitted up against a computer in a game of Rock, Paper, Scissors,
+Players are pitted against a computer in a game of Rock, Paper, Scissors,
 Lizard, Spock. Once the human player has chosen their move, the computer's
 move is revealed and the result is recorded according to the rules (shown above).
 
