@@ -35,7 +35,7 @@ end
 
 ENCRYPTED_PIONEERS.each { |pioneer| puts rot13(pioneer) }
 
-# ALTERNATIVE SOLUTION:
+# ALTERNATIVE SOLUTIONS:
 
 # 1) - Launch School solution
 # def rot13(encrypted_text)
@@ -56,7 +56,7 @@ ENCRYPTED_PIONEERS.each { |pioneer| puts rot13(pioneer) }
 #   puts rot13(encrypted_name)
 # end
 
-# 2) - An incredibly interesting solution from another student
+# 2) - An interesting solution from another student
 # def rot13(string)
 #   string.tr("a-zA-Z", "n-za-mN-ZA-M")
 # end
