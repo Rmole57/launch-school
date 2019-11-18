@@ -15,7 +15,7 @@ class TestClass < Minitest::Test
     @employee = Employee.new
   end
 
-  def test_raise_noexperience
+  def test_raise_noexperience_error
     assert_raises NoExperienceError do
       @employee.hire
     end
