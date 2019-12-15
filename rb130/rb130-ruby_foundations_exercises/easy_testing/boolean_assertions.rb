@@ -14,4 +14,4 @@ end
 
 # ALTERNATIVE SOLUTION:
 
-# assert value.odd?, 'value is not odd'
+# assert @value.odd?, 'value is not odd'

@@ -102,7 +102,7 @@ ENCRYPTED_PIONEERS.each { |pioneer| puts rot13(pioneer) }
 # are gaps in both the lower case alphabet and the upper case alphabet.
 
 # So trying to apply an encryption key like Rot13 directly would be a bit difficult since
-# you can't just increment or decrement by 13 places the code point value since not all
+# you can't just increment or decrement the code point value by 13 places since not all
 # of the letters are consecutive.
 
 # All that being said, if the data given to us is the string representation of the
@@ -163,5 +163,5 @@ ENCRYPTED_PIONEERS.each { |pioneer| puts rot13(pioneer) }
 # # Test case:
 # p rot13("d388a7a5a4a5858240e995878688a9828782") # => "Yukihiro Matsumoto"
 
-# Another interesting challenge would be in writing a program that can detect different
+# Another interesting challenge would be writing a program that can detect different
 # types of encodings and convert them to their ASCII representations appropriately.
