@@ -1,34 +1,34 @@
-# def display_top(n)
-#   adjustment = (n / 2) - 1
-#   (n / 2).times do |space|
-#     space_between = ' ' * (adjustment - space)
-#     puts "*#{space_between}*#{space_between}*".center(n)
-#   end
-# end
+def display_top(n)
+  adjustment = (n / 2) - 1
+  (n / 2).times do |space|
+    space_between = ' ' * (adjustment - space)
+    puts "*#{space_between}*#{space_between}*".center(n)
+  end
+end
 
-# def display_middle(n)
-#   puts '*' * n
-# end
+def display_middle(n)
+  puts '*' * n
+end
 
-# def display_bottom(n)
-#   (n / 2).times do |space|
-#     space_between = ' ' * space
-#     puts "*#{space_between}*#{space_between}*".center(n)
-#   end
-# end
+def display_bottom(n)
+  (n / 2).times do |space|
+    space_between = ' ' * space
+    puts "*#{space_between}*#{space_between}*".center(n)
+  end
+end
 
-# def star(n)
-#   if n.even? || n < 7
-#     raise "Size 'n' must be an odd integer greater than or equal to 7!"
-#   end
-#   display_top(n)
-#   display_middle(n)
-#   display_bottom(n)
-# end
+def star(n)
+  if n.even? || n < 7
+    raise "Size 'n' must be an odd integer greater than or equal to 7!"
+  end
+  display_top(n)
+  display_middle(n)
+  display_bottom(n)
+end
 
-# star(7)
-# star(9)
-# star(6)
+star(7)
+star(9)
+star(6)
 
 # ALTERNATIVE SOLUTION:
 
@@ -98,41 +98,41 @@
 
 # Sine Wave:
 
-def build_top(amplitude, frequency = 1)
-  top = []
+# def build_top(amplitude, frequency = 1)
+#   top = []
 
-  amplitude.downto(0) do |y_curr|
-    line = build_line(amplitude, y_curr)
-    top << (line * frequency)
-  end
+#   amplitude.downto(0) do |y_curr|
+#     line = build_line(amplitude, y_curr)
+#     top << (line * frequency)
+#   end
 
-  top
-end
+#   top
+# end
 
-def build_bottom(amplitude, frequency = 1)
-  bottom = build_top(amplitude, frequency).reverse
-  shift = amplitude * 2 + 1
-  bottom.map { |line| line.prepend(' ' * shift) }
-end
+# def build_bottom(amplitude, frequency = 1)
+#   bottom = build_top(amplitude, frequency).reverse
+#   shift = amplitude * 2 + 1
+#   bottom.map { |line| line.prepend(' ' * shift) }
+# end
 
-def build_line(amplitude, y_coord)
-  x_origin = Math::PI / 2
-  a = Math.asin(y_coord * (1.0 / amplitude))
+# def build_line(amplitude, y_coord)
+#   x_origin = Math::PI / 2
+#   a = Math.asin(y_coord * (1.0 / amplitude))
 
-  x1 = ((a / x_origin) * amplitude).round
-  x2 = (amplitude - x1).round
-  line = "#{' ' * x1}*#{' ' * x2}"
+#   x1 = ((a / x_origin) * amplitude).round
+#   x2 = (amplitude - x1).round
+#   line = "#{' ' * x1}*#{' ' * x2}"
 
-  shift = amplitude * 2 + 1
-  line << "#{line.reverse}#{' ' * shift}"
-end
+#   shift = amplitude * 2 + 1
+#   line << "#{line.reverse}#{' ' * shift}"
+# end
 
-def sine_wave(amplitude, frequency = 1)
-  top_half = build_top(amplitude, frequency)
-  bottom_half = build_bottom(amplitude, frequency)
-  puts top_half, bottom_half
-end
+# def sine_wave(amplitude, frequency = 1)
+#   top_half = build_top(amplitude, frequency)
+#   bottom_half = build_bottom(amplitude, frequency)
+#   puts top_half, bottom_half
+# end
 
-sine_wave(7, 3)
-sine_wave(14, 2)
-sine_wave(21)
+# sine_wave(7, 3)
+# sine_wave(14, 2)
+# sine_wave(21)
