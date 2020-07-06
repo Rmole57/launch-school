@@ -1,0 +1,149 @@
+html, body {
+  font: 28px Helvetica, Arial, sans-serif;
+  background: white;
+}
+
+article {
+  border: 2px solid black;
+  box-sizing: border-box;
+  padding: 10px 15px 15px 15px;
+  width: 680px;
+}
+
+header {
+  border-bottom: 15px solid black;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  border-bottom: 1px solid black;
+  border-top: 30px solid black;
+  font-size: 1rem;
+  margin: 5px 0 0 0;
+  padding: 10px 0;
+}
+
+header p {
+  margin: 0;
+}
+
+header dl {
+  display: inline-block;
+  padding: 5px 0;
+  width: 50%;
+}
+
+dl {
+  padding: 0;
+  margin: 0;
+}
+
+dt {
+  display: inline;
+  font-weight: bold;
+}
+
+dd {
+  display: inline;
+  margin: 0;
+}
+
+header dl + dl {
+  text-align: right;
+}
+
+header dl + dl dt {
+  font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+thead th {
+  text-align: right;
+}
+
+sup {
+  vertical-align: 3px;
+}
+
+tbody th {
+  border-top: 1px solid black;
+  font-weight: normal;
+  padding: 2px 0;
+  text-align: left;
+}
+
+tbody td {
+  padding: 2px 0;
+  border-top: 1px solid black;
+}
+
+tr td:last-of-type {
+  font-weight: bold;
+  text-align: right;
+}
+
+.indent {
+  border-top: none;
+  width: 1rem;
+}
+
+td dt {
+  font-weight: normal;
+}
+
+tbody + tbody tr:first-of-type td {
+  border-top: 20px solid black;
+}
+
+tbody + tbody tr td:last-of-type {
+  font-weight: normal;
+}
+
+tfoot td:last-of-type {
+  border-top: 1px solid black;
+  font-size: .9rem;
+  font-weight: normal;
+  padding: .5rem 0 .5rem .7rem;
+  text-align: left;
+  text-indent: -.7rem;
+}
+
+table:last-of-type {
+  font-size: .8rem;
+}
+
+table:last-of-type thead th {
+  border-bottom: 1px solid black;
+  font-weight: normal;
+  text-align: left;
+  width: 37%;
+}
+
+table:last-of-type thead th + th {
+  width: 21%;
+}
+
+table:last-of-type td {
+  border: none;
+}
+
+table:last-of-type tr td:last-of-type {
+  font-weight: normal;
+  text-align: left;
+}
+
+table:last-of-type td.indent {
+  text-indent: 1.2rem;
+  width: auto;
+}
