@@ -1,0 +1,78 @@
+body {
+  font: normal 16px Helvetica, Arial, sans-serif;
+}
+
+fieldset {
+  width: 600px;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+}
+
+dl {
+  margin-bottom: 0;
+}
+
+dl + dl {
+  margin-top: 0;
+}
+
+dt {
+  margin-bottom: 5px;
+}
+
+dd {
+  margin: 0 0 25px 0;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  height: 30px;
+  padding: 3px 10px;
+  font: normal 14px Helvetica, Arial, sans-serif;
+  border: 1px solid #cecece;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: auto;
+  resize: vertical;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.partial {
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.one_half {
+  width: 50%;
+}
+
+.one_tenth {
+  width: 10%;
+}
+
+.four_tenths {
+  width: 40%;
+}
+
+.left {
+  padding-right: 5px;
+}
+
+.right {
+  padding-left: 5px;
+}
+
+.both {
+  padding-left: 5px;
+  padding-right: 5px;
+}
