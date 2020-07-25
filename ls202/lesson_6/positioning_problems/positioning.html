@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Positioning</title>
+    <meta charset="UTF-8" />
+    <style>
+      #positioned {
+        background-color: #ffc;
+        box-sizing: border-box;
+        padding: 30px 15px;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        margin-left: -200px;
+        width: 400px;
+        z-index: 2;
+      }
+
+      #positioned span {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        background-color: pink;
+        height: 20px;
+        width: 20px;
+      }
+
+      #fixed {
+        background-color: rgba(0, 0, 0, .6);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed placerat metus ut enim pharetra bibendum id ac nulla. Mauris cursus, urna et vulputate scelerisque, massa lectus lobortis urna, vitae fermentum ipsum massa ut risus. Nam ullamcorper arcu orci, eget suscipit turpis malesuada sed. Donec consectetur volutpat ex, ac consequat justo porttitor quis. Nullam molestie consequat tellus, vitae suscipit odio egestas a. Quisque eu condimentum tortor. Curabitur commodo fermentum elit.</p>
+
+      <p>Aliquam scelerisque quam libero, id tincidunt odio bibendum sed. Duis eget orci laoreet, elementum arcu id, tincidunt mauris. Mauris bibendum tristique urna. Maecenas ut eros rhoncus nunc congue finibus et ac sapien. Maecenas ligula est, efficitur nec mollis ut, pharetra ac nisl. Aenean accumsan nibh id ante consequat ultrices. Pellentesque id nulla quis sapien finibus bibendum sed et lorem. In luctus nisi mi, tincidunt auctor ante consectetur blandit. Mauris commodo condimentum est non ullamcorper. Curabitur eros erat, vestibulum sed eros eget, dignissim sodales nisi. Curabitur euismod orci sit amet est malesuada suscipit. Sed nunc leo, facilisis posuere imperdiet quis, ullamcorper in enim. Suspendisse rutrum turpis quis erat vulputate semper. Fusce nibh ex, sollicitudin hendrerit tempus quis, pellentesque a orci. Quisque dapibus libero et tortor ultrices, ac faucibus ipsum placerat.</p>
+
+      <p>Duis laoreet sagittis lacus, sit amet eleifend est vehicula vitae. Nunc scelerisque et velit vel varius. Nam euismod quam at orci porta eleifend. Donec tortor felis, venenatis eu pharetra sit amet, ultrices eu ipsum. Integer consequat aliquet erat vel sodales. Praesent imperdiet quis purus ut interdum. Vestibulum tincidunt magna odio, ut commodo ligula venenatis vitae. Aliquam mollis orci at eros convallis faucibus. Ut bibendum, mi nec vestibulum posuere, magna justo porta felis, in tempor eros lacus quis lacus. Fusce eget massa a libero suscipit malesuada. Donec sed efficitur sapien, non dapibus orci. Nullam ut commodo nulla. Sed vehicula cursus velit, nec faucibus tellus rutrum non.</p>
+
+      <p>Duis imperdiet orci a est placerat rutrum. Suspendisse eget bibendum diam, vel consectetur turpis. Etiam placerat cursus odio vitae sodales. Sed quis diam non nisl egestas accumsan eget vel felis. Vivamus ac porttitor libero. Praesent vestibulum, ipsum non egestas feugiat, justo risus pellentesque lorem, vel ornare quam sapien in sem. Quisque euismod, justo dignissim facilisis condimentum, quam nisl finibus justo, lacinia laoreet magna libero in tellus. Etiam sit amet urna sed tortor elementum scelerisque. Cras a malesuada magna. In ac tempus elit, vitae fringilla risus. Ut porttitor vulputate felis, vel sagittis ante bibendum vitae. Nullam non est leo. Vestibulum elit enim, malesuada sed dui vitae, imperdiet pellentesque augue. Vivamus quis massa ut dui interdum aliquet vel ut libero. Integer egestas est et pretium semper.</p>
+
+      <p>Pellentesque vel magna ac lorem consectetur venenatis eu eget erat. Mauris magna est, laoreet ac fringilla quis, blandit vitae libero. Praesent et nunc non arcu molestie condimentum varius eu lacus. Nam augue metus, eleifend vitae urna sed, hendrerit ullamcorper neque. Duis porta elementum dui, porttitor semper dolor semper nec. Etiam pulvinar vestibulum tellus, eget semper velit maximus a. Donec fringilla libero porta sollicitudin pulvinar. Praesent euismod gravida lectus, non congue tellus fermentum ac. Duis pharetra aliquam tempus. Maecenas in mi nisi. Cras luctus nisl in blandit sagittis. Proin sit amet nibh tellus. Nullam varius mollis ante tristique convallis. Ut in enim lobortis, maximus sapien id, sodales ipsum. Sed non efficitur lacus.</p>
+    </section> 
+
+    <div id="positioned">
+      <span></span>
+      I'm positioned!
+    </div>
+
+    <div id="fixed"></div>
+  </body>
+</html>
