@@ -44,3 +44,40 @@ let longText = 'Four score and seven years ago our fathers brought forth' +
   ' earth.';
 
 longestSentence(longText);
+
+// console output
+// It is rather for us to be here dedicated to the great task remaining before us -- that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion -- that we here highly resolve that these dead shall not have died in vain -- that this nation, under God, shall have a new birth of freedom -- and that government of the people, by the people, for the people, shall not perish from the earth.
+
+// The longest sentence has 86 words.
+
+
+// Assuming the last sentence is removed:
+
+longestSentence(longText);
+
+// console output
+// Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal.
+
+// The longest sentence has 30 words.
+
+
+// ALTERNATIVE SOLUTION:
+
+// function longestSentence(text) {
+//   let sentenceArray = text.match(/\w[^.!?]*?[.!?]/g);
+
+//   let longest = sentenceArray.reduce((longest, currentSentence) => {
+//     if (wordCount(longest) > wordCount(currentSentence)) {
+//       return longest;
+//     } else {
+//       return currentSentence;
+//     }
+//   });
+
+//   console.log(longest);
+//   console.log('The longest sentence has ' + String(wordCount(longest)) + ' words.');
+// }
+
+// function wordCount(sentence) {
+//   return sentence.split(' ').length;
+// }
