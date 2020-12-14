@@ -1,6 +1,6 @@
 function myMap(array, func) {
   let newArray = [];
-  array.forEach(value => newArray.push(func(value)));
+  array.forEach((value, index, array) => newArray.push(func(value, index, array)));
   return newArray;
 }
 

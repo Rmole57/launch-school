@@ -1,6 +1,6 @@
 function myOwnEvery(array, func) {
   for (let index = 0; index < array.length; index += 1) {
-    if (!func(array[index])) return false;
+    if (!func(array[index], index, array)) return false;
   }
 
   return true;

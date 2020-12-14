@@ -10,7 +10,9 @@ function myReduce(array, func, initial) {
     index = 0;
   }
 
-  array.slice(index).forEach(element => value = func(value, element));
+  array.slice(index).forEach((element, index, array) => {
+   value = func(value, element, index, array);
+  });
 
   return value;
 }
