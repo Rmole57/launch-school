@@ -49,9 +49,16 @@ console.log(luhnCheck('2323 2005 7766 3555')); // false
 // console.log(formatValidNumber('2323 2005 7766 3554')); // '2323 2005 7766 3554'
 // console.log(formatValidNumber('1111'));                // '11114'
 // console.log(formatValidNumber('2324'));                // '23242'
+// console.log(formatValidNumber('2358'));                // '23580'
+// console.log(formatValidNumber('23580'));               // '23580'
 
 // 2)
 // function checksum(numString) {
+//   let sum = getChecksum(numString);
+//   return sum % 10 === 0;
+// }
+
+// function getChecksum(numString) {
 //   let cleanedString = numString.replace(/\D/g, '');
 //   let digits = cleanedString.split('').reverse().map(Number);
 
@@ -62,12 +69,12 @@ console.log(luhnCheck('2323 2005 7766 3555')); // false
 //     return acc + product;
 //   });
 
-//   return sum % 10;
+//   return sum;
 // }
 
 // function formatValidNumber(numString) {
-//   if (checksum(numString) === 0) return numString;
-//   let checkDigit = 10 - checksum(numString + '0');
+//   if (checksum(numString)) return numString;
+//   let checkDigit = (10 - (getChecksum(numString + '0') % 10)) % 10;
 //   return numString + String(checkDigit);
 // }
 
@@ -75,3 +82,5 @@ console.log(luhnCheck('2323 2005 7766 3555')); // false
 // console.log(formatValidNumber('2323 2005 7766 3554')); // '2323 2005 7766 3554'
 // console.log(formatValidNumber('1111'));                // '11114'
 // console.log(formatValidNumber('2324'));                // '23242'
+// console.log(formatValidNumber('2358'));                // '23580'
+// console.log(formatValidNumber('23580'));               // '23580'
