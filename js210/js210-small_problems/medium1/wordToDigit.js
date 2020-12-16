@@ -60,5 +60,5 @@ console.log(wordToDigit('The weight is done.'));
 //   const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four',
 //                         'five', 'six', 'seven', 'eight', 'nine'];
 
-//   return sentence.replace(NUM_WORD_REGEX, match => NUMBER_WORDS.indexOf(match));
+//   return sentence.replace(NUM_WORD_REGEX, match => NUMBER_WORDS.indexOf(match.toLowerCase()));
 // }
