@@ -77,10 +77,7 @@ diamond(9);
 
 // function diamond(n) {
 //   let topHalf = buildHalf(n / 2);
-//   let result = topHalf.concat(topHalf.slice().reverse().slice(1))
-//                       .join('')
-//                       .trimEnd();
-
+//   let result = topHalf.concat(topHalf.slice().reverse().slice(1)).join('\n');
 //   console.log(result);
 // }
 
@@ -89,10 +86,7 @@ diamond(9);
 
 //   for (let count = 0; count < n; count += 1) {
 //     let row = `${' '.repeat(n - count)}*`;
-
 //     if (count > 0) row += `${' '.repeat(1 + (2 * (count - 1)))}*`;
-
-//     row += '\n';
 //     rows.push(row);
 //   }
 
@@ -100,23 +94,23 @@ diamond(9);
 // }
 
 // diamond(1);
-// // logs:
-// // *
+// logs:
+// *
 
 // diamond(3);
-// // logs:
-// //  *
-// // * *
-// //  *
+// logs:
+//  *
+// * *
+//  *
 
 // diamond(9);
-// // logs:
-// //     *
-// //    * *
-// //   *   *
-// //  *     *
-// // *       *
-// //  *     *
-// //   *   *
-// //    * *
-// //     *
+// logs:
+//     *
+//    * *
+//   *   *
+//  *     *
+// *       *
+//  *     *
+//   *   *
+//    * *
+//     *
