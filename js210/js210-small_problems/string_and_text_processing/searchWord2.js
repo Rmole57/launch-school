@@ -19,7 +19,7 @@ console.log(searchWord('sed', text));
 //   if (typeof word !== 'string' || typeof text !== 'string') return 0;
 
 //   const searchRegex = new RegExp(`\\b${word}\\b`, 'ig');
-//   return text.replace(searchRegex, `**${word.toUpperCase()}**`);
+//   return text.replace(searchRegex, highlightMatch);
 // }
 
 // function highlightMatch(match) {
