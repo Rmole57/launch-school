@@ -81,7 +81,7 @@ console.log(lightsOn(10));       // [1, 4, 9]
 // 3) - Solution inspired by a classmate's implementation, realizing the fact that the resulting "on" switches are all perfect squares:
 // function lightsOn(switches) {
 //   let lights = [];
-//   let limit = Math.floor(Math.sqrt(switches));
+//   let limit = Math.sqrt(switches);
 
 //   for (let toggleRound = 1; toggleRound <= limit; toggleRound += 1) {
 //     lights.push(toggleRound**2);
