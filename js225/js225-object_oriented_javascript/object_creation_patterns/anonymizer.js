@@ -92,6 +92,72 @@ console.log(fooBar.reanonymize('abc'));            // logs true
 console.log(displayName === fooBar.displayName);   // logs false
 
 
+// ALTERNATIVE SOLUTION:
+// (The below solution was inspired by a classmate's implementation by defining all methods and helper functions in the `init` method for the `Account` object):
+// let Account = {
+//   init(email, password, firstName, lastName) {
+//     function isBadPassword(testValue) {
+//       return testValue !== password
+//     }
+
+//     this.email = function(value) {
+//       if (isBadPassword(value)) {
+//         console.log('invalid Password')
+//         return;
+//       }
+//       return email;
+//     }
+
+//     this.resetPassword = function(value, newPassword) {
+//       if (isBadPassword(value)) {
+//         return 'invalid Password'
+//       }
+//       password = newPassword;
+//       return true;
+//     }
+
+//     this.firstName = function(value) {
+//       return isBadPassword(value) ? 'invalid Password' : firstName;
+//     }
+
+//     this.lastName = function(value) {
+//       return isBadPassword(value) ? 'invalid Password' : lastName;
+//     };
+
+//     const anonymize = function() {
+//       const possibilities = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+//       const newIndex = function() {
+//         return Math.floor(Math.random(possibilities.length) * possibilities.length);
+//       };
+//       let result = [];
+
+//       for (let index = 0; index < 16; index += 1) {
+//         result.push(possibilities[newIndex()])
+//       };
+
+//       return result.join('');
+//     }
+
+//     this.reanonymize = function(value) {
+//       if (isBadPassword(value)) {
+//         console.log('Invalid Password');
+//         return false;
+//       };
+
+//       let newValue = anonymize();
+
+//       while (this.displayName === newValue) {
+//         newValue = anonymize()
+//       };
+//       this.displayName = newValue
+//       return true;
+//     }
+
+//     this.reanonymize(password);
+//     return this;
+//   }
+// }
+
 // FURTHER EXPLORATION:
 
 // const Account = (() => {
