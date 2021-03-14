@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Book Time Slots</title>
+    <style>
+      #newStudentForm {
+        background: #ccc;
+        padding: 15px;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Schedules</h1>
+    <form action="/api/bookings" method="post">
+      <label for="id">Please select one schedule</label>
+      <select name="id" id="id"></select>
+      <br>
+      <label for="email">Email:</label>
+      <input type="text" name="student_email" id="student_email" required>
+      <input type="submit">
+    </form>
+    <script type="text/javascript">
+      function createNewStudentForm({booking_sequence, email}) {
+        const newForm = document.createElement('form');
+        newForm.id = 'newStudentForm';
+        newForm.action = '/api/students';
+        newForm.method = 'post';
+
+        const heading = document.createElement('h1');
+        heading.textContent = 'Please provide new student details';
+        newForm.appendChild(heading);
+
+        const emailLabel = document.createElement('label');
+        emailLabel.for = 'email';
+        emailLabel.textContent = 'Email: ';
+        newForm.appendChild(emailLabel);
+
+        const emailInput = document.createElement('input');
+        emailInput.type = 'text';
+        emailInput.name = 'email';
+        emailInput.id = 'email';
+        emailInput.value = email;
+        newForm.appendChild(emailInput);
+
+        newForm.appendChild(document.createElement('br'));
+
+        const nameLabel = document.createElement('label');
+        nameLabel.for = 'name';
+        nameLabel.textContent = 'Name: ';
+        newForm.appendChild(nameLabel);
+
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.name = 'name';
+        nameInput.id = 'name';
+        nameInput.required = true;
+        newForm.appendChild(nameInput);
+
+        newForm.appendChild(document.createElement('br'));
+
+        const sequenceLabel = document.createElement('label');
+        sequenceLabel.for = 'booking_sequence';
+        sequenceLabel.textContent = 'Booking Sequence: ';
+        newForm.appendChild(sequenceLabel);
+
+        const sequenceInput = document.createElement('input');
+        sequenceInput.type = 'text';
+        sequenceInput.name = 'booking_sequence';
+        sequenceInput.id = 'booking_sequence';
+        sequenceInput.value = booking_sequence;
+        newForm.appendChild(sequenceInput);
+
+        newForm.appendChild(document.createElement('br'));
+
+        const submit = document.createElement('input');
+        submit.type = 'submit';
+        newForm.appendChild(submit);
+
+        document.body.appendChild(newForm);
+      }
+
+      function formatDataToJson(formData) {
+        const json = {};
+        for (const pair of formData.entries()) {
+          json[pair[0]] = pair[1];
+        }
+
+        return json;
+      }
+
+      (() => {
+        const idList = document.querySelector('#id');
+        const getStaffName = (staffId, members) => members.find(({id}) => id === staffId).name;
+
+        const staffRequest = new XMLHttpRequest();
+        staffRequest.open('GET', '/api/staff_members');
+        staffRequest.responseType = 'json';
+        staffRequest.send();
+
+        staffRequest.addEventListener('load', event => {
+          const staffMembers = staffRequest.response;
+        
+          const scheduleRequest = new XMLHttpRequest();
+          scheduleRequest.open('GET', '/api/schedules');
+          scheduleRequest.responseType = 'json';
+          scheduleRequest.send();
+
+          scheduleRequest.addEventListener('load', event => {
+            const schedules = scheduleRequest.response;
+            const availableSchedules = schedules.filter(({student_email}) => !student_email);
+
+            availableSchedules.forEach(({id, staff_id, date, time}) => {
+              const name = getStaffName(staff_id, staffMembers);
+              const option = document.createElement('option');
+              option.value = id;
+              option.textContent = `${name} | ${date} | ${time}`;
+              idList.appendChild(option);
+            });
+          });
+        });
+      })();
+
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        
+        const formData = new FormData(form);
+        const json = JSON.stringify(formatDataToJson(formData));
+
+        xhr.send(json);
+
+        xhr.addEventListener('load', event => {
+          switch (xhr.status) {
+            case 204:
+              alert('Booked');
+              window.location.href = '/book-time-slots.html';
+              break;
+            case 404:
+              alert(xhr.responseText);
+              form.querySelector('input[type=submit]').disabled = true;
+              const booking_sequence = xhr.responseText.split(':')[1].trim();
+              const email = form.querySelector('#student_email').value;
+              createNewStudentForm({booking_sequence, email});
+
+              const newStudentForm = document.querySelector('#newStudentForm');
+
+              newStudentForm.addEventListener('submit', event => {
+                event.preventDefault();
+
+                const secondXhr = new XMLHttpRequest();
+                secondXhr.open('POST', newStudentForm.action);
+                secondXhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+                const studentFormData = new FormData(newStudentForm);
+                const studentJson = JSON.stringify(formatDataToJson(studentFormData));
+
+                secondXhr.send(studentJson);
+
+                secondXhr.addEventListener('load', event => {
+                  alert(secondXhr.responseText);
+
+                  if (secondXhr.status === 201) {
+                    newStudentForm.reset();
+                    form.dispatchEvent(new Event('submit', { cancelable: true }));
+                  }
+                });
+              });  
+          }
+        });
+      });
+      
+    </script>
+  </body>
+</html>

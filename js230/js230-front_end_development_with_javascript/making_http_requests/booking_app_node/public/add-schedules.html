@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Add Schedules</title>
+    <style>
+      dl {
+        padding: 0.5em;
+      }
+
+      dt {
+        float: left;
+        color: #f0595b;
+        clear: left;
+        width: 100px;
+        text-align: right;
+        font-weight: bold;
+      }
+
+      dt::after {
+        content: ":";
+      }
+
+      dd {
+        margin: 0 0 0 110px;
+        padding: 0 0 0.5em 0;
+      }
+
+      fieldset {
+        border: 2px solid black;
+      }
+
+      input[type="submit"] {
+        display: inline-block;
+        margin-top: 15px;
+        color: #fff;
+        background: #f0595b;
+        border-color: #f0595b;
+        border-radius: 5px;
+        width: 100px;
+        height: 50px;
+      }
+
+      button {
+        display: inline-block;
+        margin-bottom: 15px;
+        color: #fff;
+        background: #5CAFDE;
+        border-color: #5CAFDE;
+        border-radius: 5px;
+        width: 100px;
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function formDataToJson(formData, staff) {
+        const json = { schedules: [] };
+
+        let ids = formData.getAll('name').map(name => {
+          return staff.find(member => member.name === name).id;
+        });
+        let dates = formData.getAll('date');
+        let times = formData.getAll('time');
+
+        ids.forEach((id, index) => {
+          json.schedules.push({
+            staff_id: id,
+            date: dates[index],
+            time: times[index]
+          });
+        });
+
+        return json;
+      }
+    </script>
+    <button id="btnAdd">Add more schedules</button>
+    <form action="/api/schedules" method="post">
+      <fieldset>
+        <legend>Schedule<span>1</span></legend>
+
+        <dl>
+          <dt>
+            <label for="name">Staff Name</label>
+          </dt>
+          <dd>
+            <select name="name" id="name_1"></select>
+          </dd>
+
+          <dt>
+            <label for="date">Date</label>
+          </dt>
+          <dd>
+            <input type="text" name="date" id="date_1" placeholder="mm-dd-yy">
+          </dd>
+
+          <dt>
+            <label for="time">Time</label>
+          </dt>
+          <dd>
+            <input type="text" name="time" id="time_1" placeholder="hh:mm">
+          </dd>
+        </dl>
+      </fieldset>
+      <input type="submit" />
+    </form>
+    <script type="text/javascript">
+      const form = document.querySelector('form');
+
+      const staffRequest = new XMLHttpRequest();
+      staffRequest.open('GET', '/api/staff_members');
+      staffRequest.responseType = 'json';
+      staffRequest.send();
+
+      const nameList = document.querySelector('select');
+      let staff;
+
+      staffRequest.addEventListener('load', event => {
+        staff = staffRequest.response;
+
+        staff.forEach(({name}) => {
+          let option = document.createElement('option');
+          option.value = name;
+          option.textContent = name;
+          nameList.appendChild(option);
+        });
+      });
+
+      const btnAdd = document.querySelector('#btnAdd');
+
+      btnAdd.addEventListener('click', event => {
+        const schedules = document.querySelectorAll('fieldset');
+        const newSchedule = schedules[0].cloneNode(true);
+        const scheduleNumber = schedules.length + 1;
+
+        newSchedule.querySelector('span').textContent = scheduleNumber;
+
+        const nameSelect = newSchedule.querySelector('select');
+        const dateInput = newSchedule.querySelector('input[name=date]');
+        const timeInput = newSchedule.querySelector('input[name=time]');
+
+        nameSelect.id = `name_${scheduleNumber}`
+        dateInput.id = `date_${scheduleNumber}`;
+        timeInput.id = `time_${scheduleNumber}`;
+
+        nameSelect.selectedOptions = nameList.options[0];
+        dateInput.value = null;
+        timeInput.value = null;
+
+        form.insertBefore(newSchedule, document.querySelector('input[type=submit]'));
+      });
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const scheduleRequest = new XMLHttpRequest();
+        scheduleRequest.open('POST', form.action);
+        scheduleRequest.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+        const formData = new FormData(form);
+        const json = JSON.stringify(formDataToJson(formData, staff));
+
+        scheduleRequest.addEventListener('load', event => {
+          alert(scheduleRequest.responseText);
+          if (scheduleRequest.status === 201) form.reset();
+        });
+
+        scheduleRequest.send(json);
+      });
+    </script>
+  </body>
+</html>

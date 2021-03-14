@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Retrieve Schedules</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      function retrieveSchedules() {
+        const request = new XMLHttpRequest();
+        const path = '/api/schedules';
+
+        request.open('GET', path);
+        request.responseType = 'json';
+
+        request.timeout = 5000;
+
+        request.addEventListener('load', event => {
+          const scheduleData = request.response;
+          const schedules = {};
+
+          scheduleData.forEach(({staff_id}) => {
+            let key = `staff ${staff_id}`;
+            if (!schedules[key]) {
+              const staffRequest = new XMLHttpRequest();
+              staffRequest.open('GET', `${path}/${staff_id}`, false);
+              staffRequest.send();
+              schedules[key] = JSON.parse(staffRequest.response).length;
+            } 
+          });
+
+          if (Object.keys(schedules).length > 0) {
+            alert(Object.keys(schedules).map(key => `${key}: ${schedules[key]}`).join('\n'));
+          } else {
+            alert('There are currently no schedules available for booking.');
+          }
+        });
+
+        request.addEventListener('timeout', event => {
+          alert('It is taking longer than usual, please try again later.')
+        });
+
+        request.addEventListener('loadend', event => {
+          alert('The request has completed.');
+        });
+
+        request.send();
+      }
+
+      retrieveSchedules();
+    </script>
+  </body>
+</html>

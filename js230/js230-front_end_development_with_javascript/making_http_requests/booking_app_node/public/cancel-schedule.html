@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Cancel Schedule</title>
+    <script src="/javascripts/cancelSchedule.js"></script>
+  </head>
+  <body>
+    <h1>Cancel Schedule</h1>
+    <form>
+      <label for="schedule-id">Schedule ID: </label>
+      <input type="text" name="schedule-id" id="schedule-id" required>
+      <br>
+      <input type="submit">
+    </form>
+    <script type="text/javascript">
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const scheduleId = form.querySelector('#schedule-id').value;
+        cancelSchedule(scheduleId);
+      });
+    </script>
+  </body>
+</html>

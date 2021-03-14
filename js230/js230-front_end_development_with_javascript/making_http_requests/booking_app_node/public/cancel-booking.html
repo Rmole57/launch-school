@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Cancel Booking</title>
+    <script src="/javascripts/cancelBooking.js"></script>
+  </head>
+  <body>
+    <h1>Cancel Booking</h1>
+    <form>
+      <label for="booking-id">Booking ID: </label>
+      <input type="text" name="booking-id" id="booking-id" required>
+      <br>
+      <input type="submit">
+    </form>
+    <script type="text/javascript">
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const bookingId = form.querySelector('#booking-id').value;
+        cancelBooking(bookingId);
+      });
+    </script>
+  </body>
+</html>

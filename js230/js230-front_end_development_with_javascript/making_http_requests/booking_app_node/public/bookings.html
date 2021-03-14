@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Bookings</title>
+    <style>
+      #booking-dates > li:hover {
+        cursor: pointer;
+      }
+
+      .invisible {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Bookings</h1>
+    <ul id="booking-dates">
+    </ul>
+    <script>
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', '/api/bookings');
+      xhr.responseType = 'json';
+      xhr.send();
+
+      xhr.addEventListener('load', event => {
+        const bookingDates = document.querySelector('#booking-dates');
+        const dates = xhr.response;
+
+        dates.forEach(date => {
+          const bookingDate = document.createElement('li');
+          bookingDate.textContent = date;
+          bookingDate.addEventListener('click', event => {
+            if (event.target === event.currentTarget) {
+              event.currentTarget.querySelector('ul').classList.toggle('invisible');
+            }
+          });
+
+          const bookings = document.createElement('ul');
+          bookings.classList.add('invisible');
+
+          const xhr2 = new XMLHttpRequest();
+          xhr2.open('GET', `/api/bookings/${date}`);
+          xhr2.responseType = 'json';
+          xhr2.send();
+
+          xhr2.addEventListener('load', event => {
+            const bookingInfo = xhr2.response;
+
+            bookingInfo.forEach(([name, email, time]) => {
+              const booking = document.createElement('li');
+              booking.textContent = `${name} | ${email} | ${time}`;
+              bookings.appendChild(booking);
+            });
+
+            bookingDate.appendChild(bookings);
+            bookingDates.appendChild(bookingDate);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
