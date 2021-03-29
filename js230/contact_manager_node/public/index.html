@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Manager</title>
+    <link rel="stylesheet" href="stylesheets/whitespace-reset.css" />
+    <link rel="stylesheet" href="stylesheets/app.css" />
+    <script src="/javascripts/handlebars.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Contact Manager</h1>
+      <p>Using Vanilla JavaScript and Handlebars</p>
+    </header>
+
+    <div id="container">
+      <main>
+        <div id="contact-menu">
+          <nav class="boxed">
+            <div class="nav-content">
+              <button type="button" class="btn btn-lg" data-btn-crud="add">Add Contact</button>
+            </div><div class="nav-content">
+              <input type="text" class="form-control" id="search-bar" value="" placeholder="Search by name or tag">
+            </div>
+          </nav>
+          <article id="contact-content"></article>
+        </div>
+        <div id="form-menu"></div>
+      </main>
+
+      <footer>Developed by Rick Molé</footer>
+    </div>
+
+    <script id="contacts" type="text/x-handlebars">
+      {{#if contacts}}
+
+      <ul id="contact-list">
+      {{#each contacts}}
+      {{> contact_info}}
+      {{/each}}
+      </ul>
+
+      {{else}}
+
+      <div class="boxed">
+        <h3>There are no contacts.</h3>
+        <button type="button" class="btn btn-lg" data-btn-crud="add">Add Contact</button>
+      </div>
+
+      {{/if}}
+    </script>
+
+    <script id="contact_info" data-type="partial" type="text/x-handlebars">
+      <li data-contact-id="{{id}}">
+        <h3>{{full_name}}</h3>
+        <dl>
+          <dt>Phone Number:</dt>
+          <dd>{{phone_number}}</dd>
+          <dt>Email:</dt>
+          <dd>{{email}}</dd>
+          <dt>Tags:</dt>
+          <dd>
+            {{#if tags}}
+
+            <ul id="contact-tags">
+              {{#each tags}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+
+            {{else}}
+
+            <p><em>There are no tags associated with this contact.</em></p>
+
+            {{/if}}
+          </dd>
+        </dl>
+        <button type="button" class="btn" data-btn-crud="edit">Edit</button>
+        <button type="submit" class="btn" data-btn-crud="delete">Delete</button>
+        <hr>
+      </li>
+    </script>
+
+    <script id="add_edit_form" type="text/x-handlebars">
+      <h2>{{title_action}} Contact</h2>
+      <form action={{path}} data-form-crud="{{data_action}}" method="post">
+        <fieldset id="contact-entries">
+          <dl>
+            <dt><label for="name">Full Name:</label></dt>
+            <dd>
+              <input type="text" name="full_name" id="name" class="form-control" value="{{contact.full_name}}" required>
+              <p class="error-message">Please enter a valid name.</p>
+            </dd>
+
+            <dt><label for="email">Email Address:</label></dt>
+            <dd>
+              <input type="email" name="email" id="email" class="form-control" value="{{contact.email}}" required>
+              <p class="error-message">Please enter a valid email address.</p>
+            </dd>
+
+            <dt><label for="phone_number"></label>Telephone Number:</dt>
+            <dd>
+              <input type="text" name="phone_number" id="phone" class="form-control" value="{{contact.phone_number}}" required>
+              <p class="error-message">Please enter a valid phone number.</p>
+            </dd>
+          </dl>
+        </fieldset>
+
+        {{> tag_content}}
+        
+        <div id="submission-btns">
+          <input type="submit" class="btn btn-lg btn-wide">
+          <button type="button" class="btn btn-lg btn-wide" data-btn-crud="cancel">Cancel</button>
+        </div>
+      </form>
+    </script>
+
+    <script id="tag_content" data-type="partial" type="text/x-handlebars">
+      <h3>{{title_action}} Tags</h3>
+      <fieldset id="available-tags">
+        <legend>Available Tags</legend>
+        {{#if tags}}
+
+        {{#each tags}}
+        <input type="checkbox" name="tag_{{this}}"">
+        <label for="tag_{{this}}">{{this}}</label>
+        {{/each}}
+
+        {{else}}
+
+        <p><em>There are no tags available.</em></p>
+
+        {{/if}}
+      </fieldset>
+
+      <div id="add-tag">
+        <label>Add New Tag:</label>
+        <input type="text" id="new-tag" class="form-control" placeholder="Enter New Tag Name">
+        <button type="button" class="btn">Add Tag</button>
+      </div>
+    </script>
+
+    <script id="no_search_results" type="text/x-handlebars">
+      <div class="boxed">
+        <h3>There are no contacts matching the search terms: "{{search_value}}"</h3>
+        <p>(Please be sure to separate your search terms with commas!)</p>
+      </div>
+    </script>
+
+    <script src="/javascripts/app.js"></script>
+  </body>
+</html>
