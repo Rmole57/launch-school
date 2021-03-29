@@ -281,24 +281,7 @@ document.addEventListener('DOMContentLoaded', event => {
       const formType = document.querySelector('#form-menu > form').dataset.dataAction;
 
       if (this.isValidTag(tagName)) {
-        const tagsContainer = document.querySelector('#available-tags');
-        const noTagsMessage = tagsContainer.querySelector('p');
-
-        if (noTagsMessage) {
-          tagsContainer.removeChild(noTagsMessage);
-        }
-
-        const newTag = document.createElement('input');
-        newTag.type = "checkbox";
-        newTag.name = `tag_${tagName}`;
-        newTag.checked = true;
-
-        const newLabel = document.createElement('label');
-        newLabel.htmlFor = `tag_${tagName}`;
-        newLabel.textContent = tagName;
-
-        [newTag, newLabel].forEach(element => tagsContainer.appendChild(element));
-
+        this.addTagToContainer(tagName);
         tagInput.value = null;
       } else {
         if (this.isDuplicateTag(tagName)) {
@@ -309,8 +292,42 @@ document.addEventListener('DOMContentLoaded', event => {
       }
     }
 
+    addTagToContainer(tagName) {
+      const tagsContainer = document.querySelector('#available-tags');
+      const noTagsMessage = tagsContainer.querySelector('p');
+
+      if (noTagsMessage) {
+        tagsContainer.removeChild(noTagsMessage);
+      }
+
+      const newTag = this.createNewTag(tagName);
+      const newLabel = this.createNewTagLabel(tagName);
+
+      [newTag, newLabel].forEach(element => tagsContainer.appendChild(element));
+    }
+
+    createNewTag(tagName) {
+      const newTag = document.createElement('input');
+      newTag.type = "checkbox";
+      newTag.name = `tag_${tagName}`;
+      newTag.checked = true;
+
+      return newTag;
+    }
+
+    createNewTagLabel(tagName) {
+      const newLabel = document.createElement('label');
+      newLabel.htmlFor = `tag_${tagName}`;
+      newLabel.textContent = tagName;
+
+      return newLabel;
+    }
+
     isDuplicateTag(tagName) {
-      return this.contactManager.tags.some(tag => {
+      const tagLabels = Array.from(document.querySelectorAll('#available-tags label'));
+      const tags = tagLabels.map(label => label.textContent);
+
+      return tags.some(tag => {
         const tagRegex = new RegExp(tag, 'i');
         return tagRegex.test(tagName);
       });
